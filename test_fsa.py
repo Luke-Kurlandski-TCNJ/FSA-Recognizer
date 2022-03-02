@@ -4,8 +4,8 @@ from unittest import TestCase
 
 from fsa import FSA
 
-class TestFSA(TestCase):
 
+class TestFSA(TestCase):
     def test___init__(self):
         pass
 
@@ -23,10 +23,10 @@ class TestFSA(TestCase):
 
     def test_extract_states(self):
         pass
-    
+
     def test_extract_final_states(self):
         pass
-    
+
     def test_extract_start_statese(self):
         pass
 
