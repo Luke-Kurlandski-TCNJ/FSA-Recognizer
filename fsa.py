@@ -1,7 +1,7 @@
 """Finte state automata and recognizer."""
 
-import argparse
 from __future__ import annotations
+import argparse
 from pathlib import Path
 from pprint import pformat
 from typing import Dict, Set
