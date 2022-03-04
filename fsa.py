@@ -66,27 +66,61 @@ class FSA:
     # TODO: implement
     @staticmethod
     def extract_states(file: Path) -> Set[str]:
-        raise NotImplementedError()
+        if(file.exists):
+            with open(file) as f: 
+                states = set(f.read().splitlines())
+                return states
+        else:
+            print("No File Found")
+        
 
     # TODO: implement
     @staticmethod
     def extract_final_states(file: Path) -> Set[str]:
-        raise NotImplementedError()
+        if(file.exists):
+            with open(file) as f:
+                final_states = set(f.read().splitlines())
+                return set(final_states)
+        else:
+            print("No File Found")
 
     # TODO: implement
     @staticmethod
     def extract_start_state(file: Path) -> str:
-        raise NotImplementedError()
+        if(file.exists):
+            with open(file) as f:
+                start_state = f.read().splitlines()[0]
+                return start_state
+        else:
+            print("No File Found")
 
     # TODO: implement
     @staticmethod
     def extract_alphabet(file: Path) -> Set[str]:
-        raise NotImplementedError()
+        if(file.exists):
+            with open(file) as f:
+                alphabet = set(f.read().splitlines())
+                return alphabet
+        else:
+            print("No File Found")
 
     # TODO: implement
     @staticmethod
     def extract_trans_func(file: Path) -> Dict[str, Dict[str, str]]:
-        raise NotImplementedError()
+        if(file.exists):
+            with open(file) as f:
+                trans_func = set(f.read().splitlines())
+                return_dic = {}
+                for item in trans_func:
+                    a_list = item.split(",")
+                    if a_list[0] not in return_dic:
+                        return_dic[a_list[0]]={a_list[1]:a_list[2]}
+                    else:
+                        return_dic[a_list[0]][a_list[1]]=a_list[2]
+                return return_dic
+        else:
+            print("No File Found")
+
 
 
 def main(path: Path, test_str: str):
