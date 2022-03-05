@@ -13,7 +13,7 @@ python fsa.py -h
 
 For help with the program:
 ```
-python fsa.py <path> <string>
+python fsa.py --path=<path> --string=<string>
 ```
 
 To run unit tests:

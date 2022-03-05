@@ -49,8 +49,31 @@ class FSA:
         )
 
     # TODO: implement
-    def recognize(self, string: str) -> bool:
-        raise NotImplementedError()
+    def _recognize(self, string: str, *, mode:str) -> bool:
+
+        state = self.start_state
+        accept = state in self.final_states
+        for c in string:
+            if mode == "base" and c not in self.trans_func[state]:
+                return False
+            elif mode == "ending" or mode == "substring":
+                continue
+            state = self.trans_func[state][c]
+            accept = state in self.final_states
+
+        return accept
+
+    def recognize_membership(self, string):
+
+        return self._recognize(string, mode="base")
+
+    def recognize_endswith(self, string):
+
+        return self._recognize(string, mode="ending")
+
+    def recognize_substring(self, string):
+
+        return self._recognize(string, mode="substring")
 
     @classmethod
     def from_file(cls: FSA, path: Path) -> FSA:
@@ -95,8 +118,27 @@ def main(path: Path, test_str: str):
     result = fsa.recognize(test_str)
     print(f"Our FSA recognizes this string: {result}")
 
+def test():
+    f = FSA(
+        states={"s0", "s1"},
+        final_states={"s0"},
+        start_state="s0",
+        alphabet={"a", "b"},
+        trans_func={
+            "s0" : {"a" : "s1"},
+            "s1" : {"b" : "s0"}
+        }
+    )
+
+    true_strings = ["", "ab", "abab", "ababab"]
+    false_strings = ["a", "b", "ba", "baba", "aba", "abb", "ababa", "ababb"]
+
+    for s in true_strings:
+        print(f.recognize(s))
 
 if __name__ == "__main__":
+    
+    test()
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
