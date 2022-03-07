@@ -193,7 +193,7 @@ class FSA:
         return self._recognize(string, mode="substring")
 
     # TODO: implement the D-Recognize algorithm
-    def _recognize(self, string: str, *, mode: str) -> bool:
+    def _recognize(self, string: str, mode: str) -> bool:
         """Perform FSA recongition in one of three modes.
 
         Parameters
