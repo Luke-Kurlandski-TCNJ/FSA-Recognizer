@@ -8,12 +8,12 @@ cd project1
 
 To run the program:
 ```
-python fsa.py -h
+python fsa.py --path=<path> --string=<string> --task=<task>
 ```
 
 For help with the program:
 ```
-python fsa.py --path=<path> --string=<string>
+python fsa.py -h
 ```
 
 To run unit tests:
