@@ -8,7 +8,7 @@ cd project1
 
 To run the program:
 ```
-python fsa.py --path=<path> --string=<string> --task=<task>
+python3 fsa.py --path=<path> --string=<string> --task=<task>
 ```
 
 For help with the program:

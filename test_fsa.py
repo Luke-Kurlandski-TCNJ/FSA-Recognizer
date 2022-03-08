@@ -61,10 +61,20 @@ class TestFSA(TestCase):
     def _test_fsa(self, fsa, mode, true_strings, false_strings):
 
         for s in true_strings:
-            self.assertTrue(fsa._recognize(s, mode=mode))
+            if mode == "member":
+                self.assertTrue(fsa.recognize_member(s))
+            elif mode == "endswith":
+                self.assertTrue(fsa.recognize_endswith(s))
+            elif mode == "substring":
+                self.assertTrue(fsa.recognize_substring(s))
 
         for s in false_strings:
-            self.assertFalse(fsa._recognize(s, mode=mode))
+            if mode == "member":
+                self.assertFalse(fsa.recognize_member(s))
+            elif mode == "endswith":
+                self.assertFalse(fsa.recognize_endswith(s))
+            elif mode == "substring":
+                self.assertFalse(fsa.recognize_substring(s))
 
     def test_recognize_membership1(self):
         """Test the language of (ab)* for membership recognition."""

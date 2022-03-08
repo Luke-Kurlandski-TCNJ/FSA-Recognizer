@@ -137,11 +137,11 @@ class FSA:
 
     def __str__(self) -> str:
         return (
-            f"States:-------\n{pformat(self.states)}"
-            f"Final States:-------------\n{pformat(self.final_states)}"
-            f"Start States:------------\n{pformat(self.start_state)}"
-            f"Alphabet:---------\n{pformat(self.alphabet)}"
-            f"Transition Function:--------------------\n{pformat(self.trans_func)}"
+            f"States:-------\n{pformat(self.states)}\n"
+            f"Final States:-------------\n{pformat(self.final_states)}\n"
+            f"Start States:------------\n{pformat(self.start_state)}\n"
+            f"Alphabet:---------\n{pformat(self.alphabet)}\n"
+            f"Transition Function:--------------------\n{pformat(self.trans_func)}\n"
         )
 
     def recognize_member(self, string: str) -> bool:
@@ -157,8 +157,18 @@ class FSA:
         bool
             Whether or not the FSA recognizes the string in member mode
         """
-
-        return self._recognize(string, mode="base")
+        
+        current_state = self.start_state
+        for index in range(len(string)+1):
+            if index == len(string):
+                if current_state in self.final_states:
+                    return True
+                else:
+                    return False 
+            elif string[index] not in self.trans_func[current_state]:
+                return False
+            else:
+                current_state = self.trans_func[current_state][string[index]]
 
     def recognize_endswith(self, string: str) -> bool:
         """Determine if a string ends with a member of the language recognized by the FSA.
@@ -173,8 +183,22 @@ class FSA:
         bool
             Whether or not the FSA recognizes the string in endswith mode
         """
-
-        return self._recognize(string, mode="ending")
+        if self.recognize_member(""):
+            return True
+        current_state = self.start_state
+        for index in range(len(string)+1):
+            if index == len(string):
+                if current_state in self.final_states:
+                    return True
+                else:
+                    if string == "":
+                        return False
+                    else:
+                        return self.recognize_endswith(string[1:]) 
+            elif string[index] not in self.trans_func[current_state]:
+                return self.recognize_endswith(string[index+1:])
+            else:
+                current_state = self.trans_func[current_state][string[index]]
 
     def recognize_substring(self, string: str) -> bool:
         """Determine if a string contains a member of the language recognized by the FSA.
@@ -189,27 +213,17 @@ class FSA:
         bool
             Whether or not the FSA recognizes the string in substring mode
         """
+        current_state = self.start_state
+        for index in range(len(string)+1):
+            if current_state in self.final_states:
+                return True
+            elif index == len(string):
+                return False 
+            elif string[index] not in self.trans_func[current_state]:
+                return self.recognize_substring(string[index+1:])
+            else:
+                current_state = self.trans_func[current_state][string[index]]
 
-        return self._recognize(string, mode="substring")
-
-    # TODO: implement the D-Recognize algorithm
-    def _recognize(self, string: str, mode: str) -> bool:
-        """Perform FSA recongition in one of three modes.
-
-        Parameters
-        ----------
-        string : str
-            The string to run through the FSA
-        mode : str
-            Mode of recognition to use. One of {'member', 'endswith', or 'substring'}
-
-        Returns
-        -------
-        bool
-            Whether or not the FSA recognizes the string under that mode
-        """
-
-        raise NotImplementedError("TODO: implement the D-Recognize algorithm")
 
     @classmethod
     def from_file(cls: FSA, path: Path) -> FSA:
@@ -249,12 +263,11 @@ class FSA:
             FSA states
         """
 
-        if file.exists:
-            with open(file) as f:
-                states = set(f.read().splitlines())
-                return states
-        else:
-            print("No File Found")
+        
+        with open(file) as f:
+            states = set(f.read().splitlines())
+            return states
+        
 
     @staticmethod
     def _extract_final_states(file: Path) -> Set[str]:
@@ -271,12 +284,11 @@ class FSA:
             FSA final states
         """
 
-        if file.exists:
-            with open(file) as f:
-                final_states = set(f.read().splitlines())
-                return set(final_states)
-        else:
-            print("No File Found")
+        
+        with open(file) as f:
+            final_states = set(f.read().splitlines())
+            return set(final_states)
+        
 
     @staticmethod
     def _extract_start_state(file: Path) -> str:
@@ -293,12 +305,10 @@ class FSA:
             FSA start state
         """
 
-        if file.exists:
-            with open(file) as f:
-                start_state = f.read().splitlines()[0]
-                return start_state
-        else:
-            print("No File Found")
+        
+        with open(file) as f:
+            start_state = f.read().splitlines()[0]
+            return start_state
 
     @staticmethod
     def _extract_alphabet(file: Path) -> Set[str]:
@@ -315,12 +325,11 @@ class FSA:
             FSA alphabet
         """
 
-        if file.exists:
-            with open(file) as f:
-                alphabet = set(f.read().splitlines())
-                return alphabet
-        else:
-            print("No File Found")
+        
+        with open(file) as f:
+            alphabet = set(f.read().splitlines())
+            return alphabet
+        
 
     @staticmethod
     def _extract_trans_func(file: Path) -> Dict[str, Dict[str, str]]:
@@ -337,19 +346,18 @@ class FSA:
             FSA transition function
         """
 
-        if file.exists:
-            with open(file) as f:
-                trans_func = set(f.read().splitlines())
-                return_dic = {}
-                for item in trans_func:
-                    a_list = item.split(",")
-                    if a_list[0] not in return_dic:
-                        return_dic[a_list[0]] = {a_list[1]: a_list[2]}
-                    else:
-                        return_dic[a_list[0]][a_list[1]] = a_list[2]
-                return return_dic
-        else:
-            print("No File Found")
+        
+        with open(file) as f:
+            trans_func = set(f.read().splitlines())
+            return_dic = {}
+            for item in trans_func:
+                a_list = item.split(",")
+                if a_list[0] not in return_dic:
+                    return_dic[a_list[0]] = {a_list[1]: a_list[2]}
+                else:
+                    return_dic[a_list[0]][a_list[1]] = a_list[2]
+            return return_dic
+        
 
 
 def main(path: Path, test_str: str, task: str) -> None:
@@ -380,9 +388,30 @@ def main(path: Path, test_str: str, task: str) -> None:
 
     print(f"Whether or not our FSA recognizes this string: {result}")
 
+def test():
+    # fsa1 = FSA(
+    #     states={"s0", "s1"},
+    #     final_states={"s0"},
+    #     start_state="s0",
+    #     alphabet={"a", "b"},
+    #     trans_func={"s0": {"a": "s1"}, "s1": {"b": "s0"}},
+    # )
+    # from copy import deepcopy
+    # # a(ba)*
+    # fsa2 = deepcopy(fsa1)
+    # fsa2.final_states = {"s1"}
 
+    fsa1 = FSA.from_file(Path("./data/a"))
+
+    print(fsa1.recognize_endswith("babb"))
+    import sys
+    sys.exit()
+   
+    
 if __name__ == "__main__":
-
+    
+    #test()
+    
     parser = argparse.ArgumentParser()
     parser.add_argument("--path", type=Path, help="Enter a path to the directory containing files.")
     parser.add_argument("--string", type=str, help="Enter a string to test on the FSA.")
