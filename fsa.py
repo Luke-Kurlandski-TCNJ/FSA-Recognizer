@@ -86,6 +86,10 @@ class FSA:
     >>> fsa = FSA.from_file(data)
     >>> fsa.recognize_member("abab")
     True
+    >>> print(fsa)
+    ...
+    >>> print(repr(fsa))
+    ...
     """
 
     states_file_name = "states.txt"

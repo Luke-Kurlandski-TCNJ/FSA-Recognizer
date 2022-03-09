@@ -13,11 +13,72 @@ from fsa import FSA
 
 
 class TestLanguage(ABC):
+    """Esnure the Finite State Automata correctly models a language.
+    
+    Tests one language using four equivalent FSA objects. Two FSA created from data structures and
+        two created from file-based representations.
 
-    fsa_simple: FSA
-    fsa_full: FSA
-    fsa_simple_file: FSA
-    fsa_full_file: FSA
+    Attributes
+    ----------
+    fsa_partial : FSA
+        FSA using a partial transition function
+    fsa_complete : FSA
+        FSA using a complete transition function
+    fsa_partial_file : FSA
+        FSA using a complete transition function, extracted from a file
+    fsa_complete_file : FSA
+        FSA using a complete transition function, extracted from a file
+    membership_true_inputs : List[str]
+        Test strings which should evaluate to true for the membership task
+    membership_false_inputs : List[str]
+        Test strings which should evaluate to false for the membership task
+    endswith_true_inputs : List[str]
+        Test strings which should evaluate to true for the endswith task
+    endswith_false_inputs : List[str]
+        Test strings which should evaluate to false for the endswith task
+    substring_true_inputs : List[str]
+        Test strings which should evaluate to true for the substring task
+    substring_false_inputs : List[str]
+        Test strings which should evaluate to false for the substring task
+
+    Methods
+    -------
+    runner
+        Performs the assertion for all membership, endswith, and substring tests
+    test_same_partial
+        Ensure the partial FSA from data structures and files are the same
+    test_same_complete
+        Ensure the complete FSA from data structures and files are the same
+    test_recognize_membership_partial
+        Test the partial FSA on membership tasks
+    test_recognize_membership_partial_file
+        Test the partial FSA from file on membership tasks
+    test_recognize_membership_complete
+        Test the complete FSA on membership tasks
+    test_recognize_membership_complete_file
+        Test the complete FSA from file FSA on membership tasks
+    test_recognize_endswith_partial
+        Test the partial FSA on endswith tasks
+    test_recognize_endswith_partial_file
+        Test the partial FSA from file on endswith tasks
+    test_recognize_endswith_complete
+        Test the complete FSA on endswith tasks
+    test_recognize_endswith_complete_file
+        Test the complete FSA from file FSA on endswith tasks
+    test_recognize_substring_partial
+        Test the partial FSA on substring tasks
+    test_recognize_substring_partial_file
+        Test the partial FSA from file on substring tasks
+    test_recognize_substring_complete
+        Test the complete FSA on substring tasks
+    test_recognize_substring_complete_file
+        Test the complete FSA from file FSA on substring tasks
+    """
+
+    fsa_partial: FSA
+    fsa_complete: FSA
+    fsa_partial_file: FSA
+    fsa_complete_file: FSA
 
     membership_true_inputs: List[str]
     membership_false_inputs: List[str]
@@ -34,102 +95,102 @@ class TestLanguage(ABC):
         for s in false_inputs:
             self.assertFalse(recognize(s), msg=f"Expected False on {s}, but got {recognize(s)}.")
 
-    def test_same_simple(self):
+    def test_same_partial(self):
         for attr in ("states", "final_states", "start_state", "alphabet", "trans_func"):
             self.assertEqual(
-                getattr(self.fsa_simple, attr),
-                getattr(self.fsa_simple_file, attr),
+                getattr(self.fsa_partial, attr),
+                getattr(self.fsa_partial_file, attr),
                 msg=f"{attr} differs between fsas.",
             )
 
-    def test_same_full(self):
+    def test_same_complete(self):
         for attr in ("states", "final_states", "start_state", "alphabet", "trans_func"):
             self.assertEqual(
-                getattr(self.fsa_full, attr),
-                getattr(self.fsa_full_file, attr),
+                getattr(self.fsa_complete, attr),
+                getattr(self.fsa_complete_file, attr),
                 msg=f"{attr} differs between fsas.",
             )
 
-    def test_recognize_membership_simple(self):
+    def test_recognize_membership_partial(self):
         self.runner(
-            self.fsa_simple.recognize_member,
+            self.fsa_partial.recognize_member,
             self.membership_true_inputs,
             self.membership_false_inputs,
         )
 
-    def test_recognize_membership_simple_file(self):
+    def test_recognize_membership_partial_file(self):
         self.runner(
-            self.fsa_simple_file.recognize_member,
+            self.fsa_partial_file.recognize_member,
             self.membership_true_inputs,
             self.membership_false_inputs,
         )
 
-    def test_recognize_membership_full(self):
+    def test_recognize_membership_complete(self):
         self.runner(
-            self.fsa_full.recognize_member,
+            self.fsa_complete.recognize_member,
             self.membership_true_inputs,
             self.membership_false_inputs,
         )
 
-    def test_recognize_membership_full_file(self):
+    def test_recognize_membership_complete_file(self):
         self.runner(
-            self.fsa_full_file.recognize_member,
+            self.fsa_complete_file.recognize_member,
             self.membership_true_inputs,
             self.membership_false_inputs,
         )
 
-    def test_recognize_endswith_simple(self):
+    def test_recognize_endswith_partial(self):
         self.runner(
-            self.fsa_simple.recognize_endswith,
+            self.fsa_partial.recognize_endswith,
             self.endswith_true_inputs,
             self.endswith_false_inputs,
         )
 
-    def test_recognize_endswith_simple_file(self):
+    def test_recognize_endswith_partial_file(self):
         self.runner(
-            self.fsa_simple_file.recognize_endswith,
+            self.fsa_partial_file.recognize_endswith,
             self.endswith_true_inputs,
             self.endswith_false_inputs,
         )
 
-    def test_recognize_endswith_full(self):
+    def test_recognize_endswith_complete(self):
         self.runner(
-            self.fsa_full.recognize_endswith,
+            self.fsa_complete.recognize_endswith,
             self.endswith_true_inputs,
             self.endswith_false_inputs,
         )
 
-    def test_recognize_endswith_full_file(self):
+    def test_recognize_endswith_complete_file(self):
         self.runner(
-            self.fsa_full_file.recognize_endswith,
+            self.fsa_complete_file.recognize_endswith,
             self.endswith_true_inputs,
             self.endswith_false_inputs,
         )
 
-    def test_recognize_substring_simple(self):
+    def test_recognize_substring_partial(self):
         self.runner(
-            self.fsa_simple.recognize_substring,
+            self.fsa_partial.recognize_substring,
             self.substring_true_inputs,
             self.substring_false_inputs,
         )
 
-    def test_recognize_substring_simple_file(self):
+    def test_recognize_substring_partial_file(self):
         self.runner(
-            self.fsa_simple_file.recognize_substring,
+            self.fsa_partial_file.recognize_substring,
             self.substring_true_inputs,
             self.substring_false_inputs,
         )
 
-    def test_recognize_substring_full(self):
+    def test_recognize_substring_complete(self):
         self.runner(
-            self.fsa_full.recognize_substring,
+            self.fsa_complete.recognize_substring,
             self.substring_true_inputs,
             self.substring_false_inputs,
         )
 
-    def test_recognize_substring_full_file(self):
+    def test_recognize_substring_complete_file(self):
         self.runner(
-            self.fsa_full_file.recognize_substring,
+            self.fsa_complete_file.recognize_substring,
             self.substring_true_inputs,
             self.substring_false_inputs,
         )
@@ -140,7 +201,7 @@ class TestLanguage1(TestCase, TestLanguage):
 
     def setUp(self) -> None:
 
-        self.fsa_simple = FSA(
+        self.fsa_partial = FSA(
             states={"s0", "s1"},
             final_states={"s0"},
             start_state="s0",
@@ -148,7 +209,7 @@ class TestLanguage1(TestCase, TestLanguage):
             trans_func={"s0": {"a": "s1"}, "s1": {"b": "s0"}},
         )
 
-        self.fsa_full = FSA(
+        self.fsa_complete = FSA(
             states={"s0", "s", "s1"},
             final_states={"s0"},
             start_state="s0",
@@ -160,9 +221,9 @@ class TestLanguage1(TestCase, TestLanguage):
             },
         )
 
-        self.fsa_simple_file = FSA.from_file("./data/1-simple")
+        self.fsa_partial_file = FSA.from_file("./data/1-partial")
 
-        self.fsa_full_file = FSA.from_file("./data/1-full")
+        self.fsa_complete_file = FSA.from_file("./data/1-complete")
 
         self.membership_true_inputs = ["", "ab", "abab", "ababab"]
         self.membership_false_inputs = ["a", "b", "ba", "baba", "aba", "abb", "ababa", "ababb"]
@@ -181,7 +242,7 @@ class TestLanguage2(TestCase, TestLanguage):
 
     def setUp(self) -> None:
 
-        self.fsa_simple = FSA(
+        self.fsa_partial = FSA(
             states={"s0", "s1"},
             final_states={"s1"},
             start_state="s0",
@@ -189,7 +250,7 @@ class TestLanguage2(TestCase, TestLanguage):
             trans_func={"s0": {"a": "s1"}, "s1": {"b": "s0"}},
         )
 
-        self.fsa_full = FSA(
+        self.fsa_complete = FSA(
             states={"s0", "s", "s1"},
             final_states={"s1"},
             start_state="s0",
@@ -201,9 +262,9 @@ class TestLanguage2(TestCase, TestLanguage):
             },
         )
 
-        self.fsa_simple_file = FSA.from_file("./data/2-simple")
+        self.fsa_partial_file = FSA.from_file("./data/2-partial")
 
-        self.fsa_full_file = FSA.from_file("./data/2-full")
+        self.fsa_complete_file = FSA.from_file("./data/2-complete")
 
         self.membership_true_inputs = ["a", "aba", "ababa", "abababa"]
         self.membership_false_inputs = ["", "b", "ba", "baba", "ab", "abab", "ababab", "abababbb"]
@@ -223,7 +284,7 @@ class TestLanguage3(TestCase, TestLanguage):
 
     def setUp(self) -> None:
 
-        self.fsa_simple = FSA(
+        self.fsa_partial = FSA(
             states={"s0", "s1"},
             final_states={"s0", "s1"},
             start_state="s0",
@@ -234,7 +295,7 @@ class TestLanguage3(TestCase, TestLanguage):
             },
         )
 
-        self.fsa_full = FSA(
+        self.fsa_complete = FSA(
             states={"s0", "s1", "s"},
             final_states={"s0", "s1"},
             start_state="s0",
@@ -242,9 +303,9 @@ class TestLanguage3(TestCase, TestLanguage):
             trans_func={"s1": {"b": "s1"}, "s": {"a": "s", "b": "s"}, "s0": {"a": "s0", "b": "s1"}},
         )
 
-        self.fsa_simple_file = FSA.from_file("./data/3-simple")
+        self.fsa_partial_file = FSA.from_file("./data/3-partial")
 
-        self.fsa_full_file = FSA.from_file("./data/3-full")
+        self.fsa_complete_file = FSA.from_file("./data/3-complete")
 
         self.membership_true_inputs = ["", "a", "aa", "aaa", "b", "bb", "bbb", "ab", "aabb"]
         self.membership_false_inputs = ["ba", "bba", "bbba", "aba", "aabba"]
@@ -265,7 +326,7 @@ class TestLanguage4(TestCase, TestLanguage):
 
     def setUp(self) -> None:
 
-        self.fsa_simple = FSA(
+        self.fsa_partial = FSA(
             states={"s0", "s1"},
             final_states={"s1"},
             start_state="s0",
@@ -276,7 +337,7 @@ class TestLanguage4(TestCase, TestLanguage):
             },
         )
 
-        self.fsa_full = FSA(
+        self.fsa_complete = FSA(
             states={"s0", "s1", "s"},
             final_states={"s1"},
             start_state="s0",
@@ -284,9 +345,9 @@ class TestLanguage4(TestCase, TestLanguage):
             trans_func={"s1": {"b": "s1"}, "s": {"a": "s", "b": "s"}, "s0": {"a": "s0", "b": "s1"}},
         )
 
-        self.fsa_simple_file = FSA.from_file("./data/4-simple")
+        self.fsa_partial_file = FSA.from_file("./data/4-partial")
 
-        self.fsa_full_file = FSA.from_file("./data/4-full")
+        self.fsa_complete_file = FSA.from_file("./data/4-complete")
 
         self.membership_true_inputs = ["b", "ab", "bb", "abb", "aabb", "aabbb"]
         self.membership_false_inputs = ["", "a", "ba", "aba", "abba", "bba"]
@@ -309,7 +370,7 @@ class TestLanguage5(TestCase, TestLanguage):
 
     def setUp(self) -> None:
 
-        self.fsa_simple = FSA(
+        self.fsa_partial = FSA(
             states={"s0", "s1", "s2"},
             final_states={"s0"},
             start_state="s0",
@@ -321,7 +382,7 @@ class TestLanguage5(TestCase, TestLanguage):
             },
         )
 
-        self.fsa_full = FSA(
+        self.fsa_complete = FSA(
             states={"s0", "s1", "s", "s2"},
             final_states={"s0"},
             start_state="s0",
@@ -334,9 +395,9 @@ class TestLanguage5(TestCase, TestLanguage):
             },
         )
 
-        self.fsa_simple_file = FSA.from_file("./data/5-simple")
+        self.fsa_partial_file = FSA.from_file("./data/5-partial")
 
-        self.fsa_full_file = FSA.from_file("./data/5-full")
+        self.fsa_complete_file = FSA.from_file("./data/5-complete")
 
         self.membership_true_inputs = ["", "aa", "aba", "abbba", "cc", "cdc", "cdddc"]
         self.membership_false_inputs = [
@@ -370,7 +431,7 @@ class TestLanguage6(TestCase, TestLanguage):
 
     def setUp(self) -> None:
 
-        self.fsa_simple = FSA(
+        self.fsa_partial = FSA(
             states={"s0", "s1", "s2"},
             final_states={"s1", "s2"},
             start_state="s0",
@@ -382,7 +443,7 @@ class TestLanguage6(TestCase, TestLanguage):
             },
         )
 
-        self.fsa_full = FSA(
+        self.fsa_complete = FSA(
             states={"s0", "s1", "s", "s2"},
             final_states={"s1", "s2"},
             start_state="s0",
@@ -395,9 +456,9 @@ class TestLanguage6(TestCase, TestLanguage):
             },
         )
 
-        self.fsa_simple_file = FSA.from_file("./data/6-simple")
+        self.fsa_partial_file = FSA.from_file("./data/6-partial")
 
-        self.fsa_full_file = FSA.from_file("./data/6-full")
+        self.fsa_complete_file = FSA.from_file("./data/6-complete")
 
         self.membership_true_inputs = ["a", "ab", "abbb", "c", "cd", "cdd"]
         self.membership_false_inputs = [
