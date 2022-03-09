@@ -157,7 +157,6 @@ class FSA:
         bool
             Whether or not the FSA recognizes the string in member mode
         """
-        
         current_state = self.start_state
         for index in range(len(string)+1):
             if index == len(string):
@@ -401,9 +400,10 @@ def test():
     # fsa2 = deepcopy(fsa1)
     # fsa2.final_states = {"s1"}
 
-    fsa1 = FSA.from_file(Path("./data/a"))
-
-    print(fsa1.recognize_endswith("babb"))
+    fsa1 = FSA.from_file(Path("./data/4"))
+    print(fsa1.recognize_member("cabb"))
+    #print(fsa1.recognize_endswith("babb"))
+    #print(fsa1.recognize_substring("babb"))
     import sys
     sys.exit()
    
