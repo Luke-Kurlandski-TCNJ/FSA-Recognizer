@@ -1,5 +1,0 @@
-s0,a,s0
-s0,b,s1
-s1,b,s1
-s,a,s
-s,b,s
