@@ -32,33 +32,33 @@ python3 -m unittest
 - D2: fsa.FSA.recognize_endswith
 - D3: fsa.FSA.recognize_substring
 - D4:
-	- L = `<regex>`
+	- L`<i>` = `<regex>`
 		- `<equivalent FSA using a complete transition function (mathematical FSA definition)>`
 		- `<equivalent FSA using a partial transition function (convenient FSA definition)>`
 		- `<unit tests class testing the language>`
-	- L = (ab)*
+	- L1 = (ab)*
 		- data/1-complete
 		- data/1-partial
-		- test_fsa.TestFSA1
-	- L = a(ba)*
+		- test_fsa.TestLanguage1
+	- L2 = a(ba)*
 		- data/2-complete
 		- data/2-partial
-		- test_fsa.TestFSA2
-	- L = a*b*
+		- test_fsa.TestLanguage2
+	- L3 = a*b*
 		- data/3-complete
 		- data/3-partial
-		- test_fsa.TestFSA3
-	- L = a*bb*
+		- test_fsa.TestLanguage3
+	- L4 = a*bb*
 		- data/4-complete
 		- data/4-partial
-		- test_fsa.TestFSA4
-	- L = (ab*a) | (cd*c) | ("")
+		- test_fsa.TestLanguage4
+	- L5 = (ab*a) | (cd*c) | ("")
 		- data/5-complete
 		- data/5-partial
-		- test_fsa.TestFSA5
-	- L = (ab*) | (cd*)
+		- test_fsa.TestLanguage5
+	- L6 = (ab*) | (cd*)
 		- data/6-complete
 		- data/6-partial
-		- test_fsa.TestFSA6
+		- test_fsa.TestLanguage6
 - D5: report.pdf
 - D6: README.md
