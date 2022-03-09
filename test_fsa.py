@@ -83,6 +83,12 @@ class TestFSA(TestCase):
         false_strings = ["a", "b", "ba", "baba", "aba", "abb", "ababa", "ababb"]
 
         self._test_fsa(self.fsa1, "member", true_strings, false_strings)
+        
+        fsa = FSA.from_file("./data/1")
+        self.assertEqual(str(self.fsa1), str(fsa))
+        self._test_fsa(fsa, "member", true_strings, false_strings)
+        fsa = FSA.from_file("./data/1s")
+        self._test_fsa(fsa, "member", true_strings, false_strings)
 
     def test_recognize_membership2(self):
         """Test the language of a(ba)* for membership recognition."""
@@ -91,6 +97,12 @@ class TestFSA(TestCase):
         false_strings = ["", "b", "ba", "baba", "ab", "abab", "ababab", "abababbb"]
 
         self._test_fsa(self.fsa2, "member", true_strings, false_strings)
+        
+        fsa = FSA.from_file("./data/2")
+        self.assertEqual(str(self.fsa2), str(fsa))
+        self._test_fsa(fsa, "member", true_strings, false_strings)
+        fsa = FSA.from_file("./data/2s")
+        self._test_fsa(fsa, "member", true_strings, false_strings)
 
     def test_recognize_membership3(self):
         """Test the language of a*b* for membership recognition."""
@@ -100,6 +112,12 @@ class TestFSA(TestCase):
 
         self._test_fsa(self.fsa3, "member", true_strings, false_strings)
 
+        fsa = FSA.from_file("./data/3")
+        self.assertEqual(str(self.fsa3), str(fsa))
+        self._test_fsa(fsa, "member", true_strings, false_strings)
+        fsa = FSA.from_file("./data/3s")
+        self._test_fsa(fsa, "member", true_strings, false_strings)
+
     def test_recognize_membership4(self):
         """Test the language of a*bb* for membership recognition."""
 
@@ -107,6 +125,12 @@ class TestFSA(TestCase):
         false_strings = ["", "a", "ba", "aba", "abba", "bba"]
 
         self._test_fsa(self.fsa4, "member", true_strings, false_strings)
+
+        fsa = FSA.from_file("./data/4")
+        self._test_fsa(fsa, "member", true_strings, false_strings)
+        self.assertEqual(str(self.fsa4), str(fsa))
+        fsa = FSA.from_file("./data/4s")
+        self._test_fsa(fsa, "member", true_strings, false_strings)
 
     def test_recognize_membership5(self):
         """Test the language of (ab*a)|(cd*c)|("") for membership recognition."""
@@ -116,6 +140,12 @@ class TestFSA(TestCase):
 
         self._test_fsa(self.fsa5, "member", true_strings, false_strings)
 
+        fsa = FSA.from_file("./data/5")
+        self._test_fsa(fsa, "member", true_strings, false_strings)
+        self.assertEqual(str(self.fsa5), str(fsa))
+        fsa = FSA.from_file("./data/5s")
+        self._test_fsa(fsa, "member", true_strings, false_strings)
+
     def test_recognize_membership6(self):
         """Test the language of (ab*)|(cd*) for membership recognition."""
 
@@ -123,6 +153,12 @@ class TestFSA(TestCase):
         false_strings = ["", "b", "d", "ba", "dc", "aba", "abc", "abd", "cdc", "cda", "cdb"]
 
         self._test_fsa(self.fsa6, "member", true_strings, false_strings)
+
+        fsa = FSA.from_file("./data/6")
+        self._test_fsa(fsa, "member", true_strings, false_strings)
+        self.assertEqual(str(self.fsa6), str(fsa))
+        fsa = FSA.from_file("./data/6s")
+        self._test_fsa(fsa, "member", true_strings, false_strings)
 
     ################################################################################################
 
@@ -134,6 +170,12 @@ class TestFSA(TestCase):
         false_strings = []
 
         self._test_fsa(self.fsa1, "endswith", true_strings, false_strings)
+        
+        fsa = FSA.from_file("./data/1")
+        self.assertEqual(str(self.fsa1), str(fsa))
+        self._test_fsa(fsa, "endswith", true_strings, false_strings)
+        fsa = FSA.from_file("./data/1s")
+        self._test_fsa(fsa, "endswith", true_strings, false_strings)
 
     def test_recognize_endswith2(self):
         """Test the language of a(ba)* for endswith recognition."""
@@ -144,6 +186,12 @@ class TestFSA(TestCase):
         false_strings += ["xyz" + s for s in false_strings]
 
         self._test_fsa(self.fsa2, "endswith", true_strings, false_strings)
+        
+        fsa = FSA.from_file("./data/2")
+        self.assertEqual(str(self.fsa2), str(fsa))
+        self._test_fsa(fsa, "endswith", true_strings, false_strings)
+        fsa = FSA.from_file("./data/2s")
+        self._test_fsa(fsa, "endswith", true_strings, false_strings)
 
     def test_recognize_endswith3(self):
         """Test the language of a*b* for endswith recognition."""
@@ -153,6 +201,12 @@ class TestFSA(TestCase):
         false_strings = []
 
         self._test_fsa(self.fsa3, "endswith", true_strings, false_strings)
+        
+        fsa = FSA.from_file("./data/3")
+        self.assertEqual(str(self.fsa3), str(fsa))
+        self._test_fsa(fsa, "endswith", true_strings, false_strings)
+        fsa = FSA.from_file("./data/3s")
+        self._test_fsa(fsa, "endswith", true_strings, false_strings)
 
     def test_recognize_endswith4(self):
         """Test the language of a*bb* for endswith recognition."""
@@ -163,6 +217,12 @@ class TestFSA(TestCase):
         false_strings += ["xyz" + s for s in false_strings]
 
         self._test_fsa(self.fsa4, "endswith", true_strings, false_strings)
+        
+        fsa = FSA.from_file("./data/4")
+        self.assertEqual(str(self.fsa4), str(fsa))
+        self._test_fsa(fsa, "endswith", true_strings, false_strings)
+        fsa = FSA.from_file("./data/4s")
+        self._test_fsa(fsa, "endswith", true_strings, false_strings)
 
     def test_recognize_endswith5(self):
         """Test the language of (ab*a)|(cd*c)|("") for endswith recognition."""
@@ -173,6 +233,12 @@ class TestFSA(TestCase):
         false_strings += ["xyz" + s for s in false_strings]
 
         self._test_fsa(self.fsa5, "endswith", true_strings, false_strings)
+        
+        fsa = FSA.from_file("./data/5")
+        self.assertEqual(str(self.fsa5), str(fsa))
+        self._test_fsa(fsa, "endswith", true_strings, false_strings)
+        fsa = FSA.from_file("./data/5s")
+        self._test_fsa(fsa, "endswith", true_strings, false_strings)
 
     def test_recognize_endswith6(self):
         """Test the language of (ab*)|(cd*) for endswith recognition."""
@@ -183,6 +249,12 @@ class TestFSA(TestCase):
         false_strings += ["xyz" + s for s in false_strings]
 
         self._test_fsa(self.fsa6, "endswith", true_strings, false_strings)
+        
+        fsa = FSA.from_file("./data/6")
+        self.assertEqual(str(self.fsa6), str(fsa))
+        self._test_fsa(fsa, "endswith", true_strings, false_strings)
+        fsa = FSA.from_file("./data/6s")
+        self._test_fsa(fsa, "endswith", true_strings, false_strings)
 
     ################################################################################################
 
@@ -194,6 +266,12 @@ class TestFSA(TestCase):
         false_strings = []
 
         self._test_fsa(self.fsa1, "substring", true_strings, false_strings)
+        
+        fsa = FSA.from_file("./data/1")
+        self.assertEqual(str(self.fsa1), str(fsa))
+        self._test_fsa(fsa, "substring", true_strings, false_strings)
+        fsa = FSA.from_file("./data/1s")
+        self._test_fsa(fsa, "substring", true_strings, false_strings)
 
     def test_recognize_substring2(self):
         """Test the language of a(ba)* for substring recognition."""
@@ -203,6 +281,12 @@ class TestFSA(TestCase):
         false_strings = ["", "b", "bb"]
 
         self._test_fsa(self.fsa2, "substring", true_strings, false_strings)
+        
+        fsa = FSA.from_file("./data/2")
+        self.assertEqual(str(self.fsa2), str(fsa))
+        self._test_fsa(fsa, "substring", true_strings, false_strings)
+        fsa = FSA.from_file("./data/2s")
+        self._test_fsa(fsa, "substring", true_strings, false_strings)
 
     def test_recognize_substring3(self):
         """Test the language of a*b* for substring recognition."""
@@ -212,6 +296,12 @@ class TestFSA(TestCase):
         false_strings = []
 
         self._test_fsa(self.fsa3, "substring", true_strings, false_strings)
+        
+        fsa = FSA.from_file("./data/3")
+        self.assertEqual(str(self.fsa3), str(fsa))
+        self._test_fsa(fsa, "substring", true_strings, false_strings)
+        fsa = FSA.from_file("./data/3s")
+        self._test_fsa(fsa, "substring", true_strings, false_strings)
 
     def test_recognize_substring4(self):
         """Test the language of a*bb* for substring recognition."""
@@ -221,6 +311,12 @@ class TestFSA(TestCase):
         false_strings = ["", "a", "aa", "aaa"]
 
         self._test_fsa(self.fsa4, "substring", true_strings, false_strings)
+        
+        fsa = FSA.from_file("./data/4")
+        self.assertEqual(str(self.fsa4), str(fsa))
+        self._test_fsa(fsa, "substring", true_strings, false_strings)
+        fsa = FSA.from_file("./data/4s")
+        self._test_fsa(fsa, "substring", true_strings, false_strings)
 
     def test_recognize_substring5(self):
         """Test the language of (ab*a)|(cd*c)|("") for substring recognition."""
@@ -230,6 +326,12 @@ class TestFSA(TestCase):
         false_strings = []
 
         self._test_fsa(self.fsa5, "substring", true_strings, false_strings)
+        
+        fsa = FSA.from_file("./data/5")
+        self.assertEqual(str(self.fsa5), str(fsa))
+        self._test_fsa(fsa, "substring", true_strings, false_strings)
+        fsa = FSA.from_file("./data/5s")
+        self._test_fsa(fsa, "substring", true_strings, false_strings)
 
     def test_recognize_substring6(self):
         """Test the language of (ab*)|(cd*) for substring recognition."""
@@ -240,3 +342,9 @@ class TestFSA(TestCase):
         false_strings += ["xyz" + s for s in false_strings]
 
         self._test_fsa(self.fsa6, "substring", true_strings, false_strings)
+        
+        fsa = FSA.from_file("./data/6")
+        self.assertEqual(str(self.fsa6), str(fsa))
+        self._test_fsa(fsa, "substring", true_strings, false_strings)
+        fsa = FSA.from_file("./data/6s")
+        self._test_fsa(fsa, "substring", true_strings, false_strings)
