@@ -347,7 +347,7 @@ class FSA:
 
         
         with open(file) as f:
-            trans_func = set(f.read().splitlines())
+            trans_func = set(f.read().replace(" ","").splitlines())
             return_dic = {}
             for item in trans_func:
                 a_list = item.split(",")
