@@ -40,23 +40,23 @@ python3 -m unittest
 		- data/1-complete
 		- data/1-partial
 		- test_fsa.TestFSA1
-	- L = a(ba)*
+	- L = a (ba)*
 		- data/2-complete
 		- data/2-partial
 		- test_fsa.TestFSA2
-	- L = a*b*
+	- L = a* b*
 		- data/3-complete
 		- data/3-partial
 		- test_fsa.TestFSA3
-	- L = a*bb*
+	- L = a* b b*
 		- data/4-complete
 		- data/4-partial
 		- test_fsa.TestFSA4
-	- L = (ab*a)|(cd*c)|("")
+	- L = (ab* a) | (cd*c) | ("")
 		- data/5-complete
 		- data/5-partial
 		- test_fsa.TestFSA5
-	- L = (ab*)|(cd*)
+	- L = (ab*) | (cd*)
 		- data/6-complete
 		- data/6-partial
 		- test_fsa.TestFSA6
