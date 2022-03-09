@@ -239,6 +239,7 @@ class FSA:
             FSA stored in this directory
         """
 
+        path = Path(path)
         states = cls._extract_states(path / cls.states_file_name)
         final_states = cls._extract_final_states(path / cls.final_states_file_name)
         start_state = cls._extract_start_state(path / cls.start_state_file_name)
