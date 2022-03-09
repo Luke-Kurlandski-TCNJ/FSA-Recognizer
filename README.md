@@ -12,9 +12,9 @@ python3 fsa.py --path=<path> --string=<string> --task=<task>
 ```
 
 where
-- <path> is a path to the directory containing the FSA files, e.g., './data/1-complete',
-- <string> is a string to test the above FSA on, e.g., 'ababab', and
-- <task> is used to determine which deliverable should be run, one of 'D1', 'D2', or 'D3'.
+- <&ltpath> is a path to the directory containing the FSA files, e.g., './data/1-complete',
+- <&ltstring> is a string to test the above FSA on, e.g., 'ababab', and
+- <&lttask> is used to determine which deliverable should be run, one of 'D1', 'D2', or 'D3'.
 
 For help with the program:
 ```
@@ -32,10 +32,10 @@ python3 -m unittest
 - D2: fsa.FSA.recognize_endswith
 - D3: fsa.FSA.recognize_substring
 - D4:
-	- L = <regex>
-		- <equivalent FSA using a complete transition function (mathematical FSA definition)>
-		- <equivalent FSA using a partial transition function (convenient FSA definition)>
-		- <unit tests class testing the language>
+	- L = <&ltregex>
+		- <&ltequivalent FSA using a complete transition function (mathematical FSA definition)>
+		- <&ltequivalent FSA using a partial transition function (convenient FSA definition)>
+		- <&ltunit tests class testing the language>
 	- L = (ab)*
 		- data/1-complete
 		- data/1-partial
