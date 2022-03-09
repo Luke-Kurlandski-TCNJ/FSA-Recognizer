@@ -12,9 +12,9 @@ python3 fsa.py --path=<path> --string=<string> --task=<task>
 ```
 
 where
-- <&ltpath> is a path to the directory containing the FSA files, e.g., './data/1-complete',
-- <&ltstring> is a string to test the above FSA on, e.g., 'ababab', and
-- <&lttask> is used to determine which deliverable should be run, one of 'D1', 'D2', or 'D3'.
+- '<path>' is a path to the directory containing the FSA files, e.g., './data/1-complete',
+- '<string>' is a string to test the above FSA on, e.g., 'ababab', and
+- '<task>' is used to determine which deliverable should be run, one of 'D1', 'D2', or 'D3'.
 
 For help with the program:
 ```
