@@ -143,11 +143,11 @@ class FSA:
 
     def __str__(self) -> str:
         return (
-            f"States:-------\n{pformat(self.states)}\n"
-            f"Final States:-------------\n{pformat(self.final_states)}\n"
-            f"Start States:------------\n{pformat(self.start_state)}\n"
-            f"Alphabet:---------\n{pformat(self.alphabet)}\n"
-            f"Transition Function:--------------------\n{pformat(self.trans_func)}\n"
+            f"States:\n-------\n{pformat(self.states)}\n\n"
+            f"Final States:\n-------------\n{pformat(self.final_states)}\n\n"
+            f"Start State:\n------------\n{pformat(self.start_state)}\n\n"
+            f"Alphabet:\n---------\n{pformat(self.alphabet)}\n\n"
+            f"Transition Function:\n--------------------\n{pformat(self.trans_func)}\n\n"
         )
 
     def recognize_member(self, string: str) -> bool:
@@ -163,17 +163,19 @@ class FSA:
         bool
             Whether or not the FSA recognizes the string in member mode
         """
+
         current_state = self.start_state
         for index in range(len(string) + 1):
             if index == len(string):
                 if current_state in self.final_states:
                     return True
-                else:
-                    return False
-            elif string[index] not in self.trans_func[current_state]:
                 return False
-            else:
-                current_state = self.trans_func[current_state][string[index]]
+
+            # Handle FSA rejection for partial transition function
+            if string[index] not in self.trans_func[current_state]:
+                return False
+
+            current_state = self.trans_func[current_state][string[index]]
 
     def recognize_endswith(self, string: str) -> bool:
         """Determine if a string ends with a member of the language recognized by the FSA.
@@ -188,22 +190,29 @@ class FSA:
         bool
             Whether or not the FSA recognizes the string in endswith mode
         """
+
+        # If the empty string is in the language, the string ends with empty string, so return True
         if self.recognize_member(""):
             return True
+
         current_state = self.start_state
         for index in range(len(string) + 1):
+            # If at the end of string...
             if index == len(string):
+                # ... and FSA says to accept...
                 if current_state in self.final_states:
                     return True
-                else:
-                    if string == "":
-                        return False
-                    else:
-                        return self.recognize_endswith(string[1:])
-            elif string[index] not in self.trans_func[current_state]:
-                return self.recognize_endswith(string[index + 1 :])
-            else:
-                current_state = self.trans_func[current_state][string[index]]
+                # ... if FSA not ready to accept and we cannot perform slicing...
+                if string == "":
+                    return False
+                # ... otherwise trim first character of string and test again
+                return self.recognize_endswith(string[1:])
+
+            # If the FSA rejects, trim first character of string and test again
+            if string[index] not in self.trans_func[current_state]:
+                return self.recognize_endswith(string[1:])
+
+            current_state = self.trans_func[current_state][string[index]]
 
     def recognize_substring(self, string: str) -> bool:
         """Determine if a string contains a member of the language recognized by the FSA.
@@ -218,24 +227,36 @@ class FSA:
         bool
             Whether or not the FSA recognizes the string in substring mode
         """
+
+        # If the empty string is in the language, the empty string is a substring, so return True
+        if self.recognize_member(""):
+            return True
+
         current_state = self.start_state
+        accept_status = current_state in self.final_states
         for index in range(len(string) + 1):
-            if current_state in self.final_states:
+            # In substring mode, we return True if reaching an accept state at any point
+            accept_status = current_state in self.final_states
+            if accept_status:
                 return True
-            elif index == len(string):
-                return False
-            elif string[index] not in self.trans_func[current_state]:
-                return self.recognize_substring(string[index + 1 :])
-            else:
-                current_state = self.trans_func[current_state][string[index]]
+            # If the string is empty, we cannot perform trimming, so just return current status
+            if string == "":
+                return accept_status
+            # If at the end of string or FSA rejects, trim first character of string and test again
+            if index == len(string) or string[index] not in self.trans_func[current_state]:
+                return self.recognize_substring(string[1:])
+
+            current_state = self.trans_func[current_state][string[index]]
+
+        return accept_status
 
     @classmethod
-    def from_file(cls: FSA, path: Path) -> FSA:
+    def from_file(cls: FSA, path: str) -> FSA:
         """Create a FSA from a file-based representation.
 
         Parameters
         ----------
-        path : Path
+        path : str
             Directory containing the FSA files
 
         Returns
@@ -385,36 +406,22 @@ def main(path: Path, test_str: str, task: str) -> None:
     print(f"Whether or not our FSA recognizes this string: {result}")
 
 
-def test():
-    # fsa1 = FSA(
-    #     states={"s0", "s1"},
-    #     final_states={"s0"},
-    #     start_state="s0",
-    #     alphabet={"a", "b"},
-    #     trans_func={"s0": {"a": "s1"}, "s1": {"b": "s0"}},
-    # )
-    # from copy import deepcopy
-    # # a(ba)*
-    # fsa2 = deepcopy(fsa1)
-    # fsa2.final_states = {"s1"}
+def debug():
+    """For development and debugging."""
 
-    fsa1 = FSA.from_file(Path("./data/4"))
-    print(fsa1.recognize_member("cabb"))
-    # print(fsa1.recognize_endswith("babb"))
-    # print(fsa1.recognize_substring("babb"))
-    import sys
-
-    sys.exit()
+    pass
 
 
 if __name__ == "__main__":
-
-    # test()
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--path", type=Path, help="Enter a path to the directory containing files.")
     parser.add_argument("--string", type=str, help="Enter a string to test on the FSA.")
     parser.add_argument("--task", type=str, help="Enter the task. One of {'D1', 'D2', 'D3'}.")
+    parser.add_argument("--debug", action="store_true", default=False, help="For developers.")
     args = parser.parse_args()
 
-    main(args.path, args.string, args.task)
+    if args.debug:
+        debug()
+    else:
+        main(args.path, args.string, args.task)

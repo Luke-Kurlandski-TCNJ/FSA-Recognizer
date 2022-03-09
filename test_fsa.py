@@ -14,7 +14,7 @@ from fsa import FSA
 
 class TestLanguage(ABC):
     """Esnure the Finite State Automata correctly models a language.
-    
+
     Tests one language using four equivalent FSA objects. Two FSA created from data structures and
         two created from file-based representations.
 
@@ -90,10 +90,17 @@ class TestLanguage(ABC):
     substring_false_inputs: List[str]
 
     def runner(self, recognize, true_inputs, false_inputs):
-        for s in true_inputs:
-            self.assertTrue(recognize(s), msg=f"Expected True on {s}, but got {recognize(s)}.")
-        for s in false_inputs:
-            self.assertFalse(recognize(s), msg=f"Expected False on {s}, but got {recognize(s)}.")
+        try:
+            for s in true_inputs:
+                self.assertTrue(
+                    recognize(s), msg=f"Expected True on '{s}', but got {recognize(s)}."
+                )
+            for s in false_inputs:
+                self.assertFalse(
+                    recognize(s), msg=f"Expected False on '{s}', but got {recognize(s)}."
+                )
+        except RecursionError:
+            raise RecursionError(f'maximum recursion depth exceeded in comparison on "{s}"')
 
     def test_same_partial(self):
         for attr in ("states", "final_states", "start_state", "alphabet", "trans_func"):
