@@ -12,7 +12,7 @@ from unittest import TestCase
 from fsa import FSA
 
 
-class TestFSA(ABC):
+class TestLanguage(ABC):
 
     fsa_simple: FSA
     fsa_full: FSA
@@ -135,7 +135,7 @@ class TestFSA(ABC):
         )
 
 
-class TestFSA1(TestCase, TestFSA):
+class TestLanguage1(TestCase, TestLanguage):
     """Test the language of L = (ab)*"""
 
     def setUp(self) -> None:
@@ -176,7 +176,7 @@ class TestFSA1(TestCase, TestFSA):
         self.substring_false_inputs = []
 
 
-class TestFSA2(TestCase, TestFSA):
+class TestLanguage2(TestCase, TestLanguage):
     """Test the language of L = a(ba)*"""
 
     def setUp(self) -> None:
@@ -218,7 +218,7 @@ class TestFSA2(TestCase, TestFSA):
         self.substring_false_inputs = ["", "b", "bb", "bbb"]
 
 
-class TestFSA3(TestCase, TestFSA):
+class TestLanguage3(TestCase, TestLanguage):
     """Test the language of L = a*b*"""
 
     def setUp(self) -> None:
@@ -260,7 +260,7 @@ class TestFSA3(TestCase, TestFSA):
         self.substring_false_inputs = []
 
 
-class TestFSA4(TestCase, TestFSA):
+class TestLanguage4(TestCase, TestLanguage):
     """Test the language of L = a*bb*"""
 
     def setUp(self) -> None:
@@ -304,7 +304,7 @@ class TestFSA4(TestCase, TestFSA):
         self.substring_false_inputs = ["", "a", "aa", "aaa"]
 
 
-class TestFSA5(TestCase, TestFSA):
+class TestLanguage5(TestCase, TestLanguage):
     """Test the language of L = (ab*a)|(cd*c)|("")"""
 
     def setUp(self) -> None:
@@ -365,7 +365,7 @@ class TestFSA5(TestCase, TestFSA):
         self.substring_false_inputs = []
 
 
-class TestFSA6(TestCase, TestFSA):
+class TestLanguage6(TestCase, TestLanguage):
     """Test the language of L = (ab*)|(cd*)"""
 
     def setUp(self) -> None:
