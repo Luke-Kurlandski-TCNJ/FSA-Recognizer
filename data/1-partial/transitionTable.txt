@@ -1,2 +1,4 @@
 s0,a,s1
 s1,b,s0
+s0,b,NULL
+s1,a,NULL

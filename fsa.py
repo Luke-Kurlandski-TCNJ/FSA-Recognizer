@@ -369,11 +369,12 @@ class FSA:
             trans_func = set(f.read().replace(" ", "").splitlines())
             return_dic = {}
             for item in trans_func:
-                a_list = item.split(",")
-                if a_list[0] not in return_dic:
-                    return_dic[a_list[0]] = {a_list[1]: a_list[2]}
-                else:
-                    return_dic[a_list[0]][a_list[1]] = a_list[2]
+                if "NULL" not in item:
+                    a_list = item.split(",")
+                    if a_list[0] not in return_dic:
+                        return_dic[a_list[0]] = {a_list[1]: a_list[2]}
+                    else:
+                        return_dic[a_list[0]][a_list[1]] = a_list[2]
             return return_dic
 
 
